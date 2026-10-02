@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LATE Mimarlık</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brandBeige: '#EFECE6',
+            brandCard: '#E4DFD7',
+            brandDark: '#121212',
+            brandText: '#2B2B2B'
+          },
+          keyframes: {
+            zoomIn: {
+              '0%': { opacity: '0', transform: 'scale(0.94)' },
+              '100%': { opacity: '1', transform: 'scale(1)' }
+            }
+          },
+          animation: {
+            pageZoom: 'zoomIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-brandBeige text-brandText dark:bg-brandDark dark:text-neutral-100 transition-colors duration-500 min-h-screen flex flex-col justify-between font-sans selection:bg-neutral-300">
+
+  <!-- HEADER / NAVIGATION -->
+  <header class="border-b border-neutral-300/60 dark:border-neutral-800 sticky top-0 bg-brandBeige/90 dark:bg-brandDark/90 backdrop-blur-md z-50">
+    <nav class="max-w-6xl mx-auto flex justify-between items-center px-6 py-5">
+      <!-- LOGO -->
+      <button onclick="switchTab('anasayfa')" class="text-left group">
+        <span class="text-2xl font-light tracking-[0.3em] uppercase block leading-none">La te</span>
+        <span class="text-xs tracking-widest text-neutral-500 lowercase block mt-1 group-hover:text-neutral-800 dark:group-hover:text-neutral-200 transition">mimarlık</span>
+      </button>
+
+      <!-- MENÜ LİNKLERİ -->
+      <div class="hidden md:flex space-x-8 text-xs font-light tracking-widest uppercase">
+        <button onclick="switchTab('projeler')" class="nav-btn hover:opacity-50 transition py-1" data-tab="projeler">projeler</button>
+        <button onclick="switchTab('hizmetler')" class="nav-btn hover:opacity-50 transition py-1" data-tab="hizmetler">hizmetler</button>
+        <button onclick="switchTab('ekip')" class="nav-btn hover:opacity-50 transition py-1" data-tab="ekip">ekip</button>
+        <button onclick="switchTab('hakkimizda')" class="nav-btn hover:opacity-50 transition py-1" data-tab="hakkimizda">hakkımızda</button>
+        <button onclick="switchTab('iletisim')" class="nav-btn hover:opacity-50 transition py-1" data-tab="iletisim">iletişim</button>
+      </div>
+
+      <!-- DAY / NIGHT TOGGLE -->
+      <button id="theme-toggle" class="relative w-12 h-7 flex items-center bg-neutral-300 dark:bg-neutral-800 rounded-full p-1 transition-colors duration-500">
+        <div id="toggle-circle" class="w-5 h-5 rounded-full bg-white dark:bg-brandDark shadow-md transform transition-transform duration-300 flex items-center justify-center text-[10px]">
+          ☀️
+        </div>
+      </button>
+    </nav>
+  </header>
+
+  <!-- SAYFA İÇERİKLERİ (DİNAMİK BÜYÜME GEÇİŞLİ) -->
+  <main class="flex-grow max-w-5xl mx-auto w-full px-6 py-12">
+
+    <!-- 1. ANA SAYFA -->
+    <section id="tab-anasayfa" class="tab-content animate-pageZoom space-y-16">
+      <div class="text-center max-w-3xl mx-auto">
+        <span class="text-xs tracking-[0.25em] text-neutral-500 uppercase block mb-3">projeler</span>
+        <h1 class="text-5xl md:text-7xl font-light tracking-widest uppercase mb-6 leading-tight">
+          MEKANI<br/>ÖZEL KIL
+        </h1>
+        <p class="max-w-xl mx-auto text-xs md:text-sm text-neutral-600 dark:text-neutral-400 font-light leading-relaxed mb-10">
+          Her projenin benzersiz olduğunu biliyoruz. Bu nedenle, sizin için özelleştirilmiş süreçlerimizle projenizin her aşamasında mükemmelliği sağlıyoruz. İşte, bizimle birlikte atacağınız adımlar.
+        </p>
+
+        <!-- İNTERAKTİF SÜREÇ KARTLARI -->
+        <div class="bg-brandCard dark:bg-neutral-900 p-8 rounded-3xl max-w-md mx-auto shadow-sm text-left transition-all border border-neutral-300/40 dark:border-neutral-800">
+          <div id="step-1">
+            <p class="text-[10px] text-neutral-500 tracking-widest mb-2 uppercase">Adınız</p>
+            <h3 class="text-base font-light mb-6">Evini değiştirmek ister misin?</h3>
+            <div class="flex gap-3">
+              <button onclick="goToStep(2)" class="flex-1 py-2.5 bg-brandText text-white dark:bg-white dark:text-brandDark rounded-xl text-xs font-light tracking-wider hover:opacity-90 transition">Mutlaka</button>
+              <button onclick="alert('İlham almak için projelerimizi inceleyebilirsiniz!')" class="flex-1 py-2.5 border border-neutral-400 dark:border-neutral-700 rounded-xl text-xs font-light tracking-wider hover:bg-neutral-200/50 dark:hover:bg-neutral-800 transition">Üzgünüm yapamam</button>
+            </div>
+          </div>
+
+          <div id="step-2" class="hidden">
+            <p class="text-[10px] text-neutral-500 tracking-widest mb-2 uppercase">Nelerden hoşlandığını söyle</p>
+            <p class="text-xs font-light mb-4">Sevdiğin bir rengi yaz gönder:</p>
+            <input type="text" placeholder="Örn: Traverten, ahşap..." class="w-full px-4 py-2.5 mb-4 border border-neutral-300 dark:border-neutral-700 rounded-xl bg-brandBeige/50 dark:bg-neutral-800 text-xs focus:outline-none" />
+            <button onclick="goToStep(3)" class="w-full py-2.5 bg-brandText text-white dark:bg-white dark:text-brandDark rounded-xl text-xs font-light tracking-wider">Gönder</button>
+          </div>
+
+          <div id="step-3" class="hidden text-center py-3">
+            <p class="text-xs font-light text-neutral-800 dark:text-neutral-200 leading-relaxed">
+              Gelecekteki eviniz için bizimle iletişime geçin, beraber tasarlayalım.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- BİZİM HİKAYEMİZ -->
+      <div class="max-w-3xl mx-auto text-center pt-10 border-t border-neutral-300/60 dark:border-neutral-800">
+        <h2 class="text-xs tracking-[0.3em] font-medium uppercase text-neutral-500 mb-6">BİZİM HİKAYEMİZ</h2>
+        <p class="text-lg md:text-2xl font-light leading-relaxed mb-4 italic">
+          "Sadece göze değil, hafızaya hitap ediyoruz. Mimarlık imzalı her parça, dokunulduğunda ustalığı bakıldığında ise köklü bir tasarım kültürünün sükunetini hissettirir"
+        </p>
+        <span class="text-[10px] tracking-[0.2em] font-light text-neutral-400 uppercase">SADE VE ŞIK</span>
+      </div>
+
+      <!-- ETKİNLİK / DAVETİYE KARTI -->
+      <div class="max-w-md mx-auto">
+        <div class="bg-brandCard dark:bg-neutral-900 p-6 rounded-3xl border border-neutral-300/40 dark:border-neutral-800 text-center space-y-2 text-xs font-light tracking-wider">
+          <p class="uppercase font-normal text-xs mb-3">Gelecekteki eviniz için bizimle iletişime geçin beraber tasarlayalım</p>
+          <div class="pt-2 text-neutral-600 dark:text-neutral-400 space-y-1 text-[11px]">
+            <p><strong class="font-normal text-brandText dark:text-white">Lalte:</strong> emirgan, 123 Anywhere St</p>
+            <p><strong class="font-normal text-brandText dark:text-white">Date:</strong> October 22, 2030</p>
+            <p><strong class="font-normal text-brandText dark:text-white">Time:</strong> 2PM</p>
+            <p><strong class="font-normal text-brandText dark:text-white">Dress Code:</strong> Garden party</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SİZİNLE ÇALIŞMAK İÇİN HEYECANLIYIZ -->
+      <div class="text-center pt-8 border-t border-neutral-300/60 dark:border-neutral-800">
+        <h2 class="text-xl md:text-2xl font-light tracking-widest uppercase mb-2">SİZİNLE ÇALIŞMAK İÇİN HEYECANLIYIZ</h2>
+        <p class="text-[11px] text-neutral-500 tracking-wider">gelecekteki işbirliklerimiz için şimdiden sabırsızlanmaktayız.</p>
+      </div>
+    </section>
+
+    <!-- 2. PROJELER SAYFASI (3 SANİYEDE BİR OTOMATİK KAYAN GÖRSEL SLIDER) -->
+    <section id="tab-projeler" class="tab-content hidden animate-pageZoom space-y-8">
+      <div class="text-center mb-10">
+        <h1 class="text-3xl md:text-5xl font-light tracking-widest uppercase mb-3">PROJELER</h1>
+        <p class="text-xs text-neutral-500 tracking-wider">Tamamlanan ve devam eden mimari uygulamalarımız</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- PROJE KARTI 1 (SLIDER) -->
+        <div class="group">
+          <div class="relative aspect-[4/5] bg-brandCard dark:bg-neutral-800 rounded-2xl overflow-hidden mb-3 border border-neutral-300/40 dark:border-neutral-800 shadow-sm" data-slider="p1">
+            
+            <!-- Görseller (3s Otomatik Kayan) -->
+            <div class="slide-item absolute inset-0 transition-opacity duration-700 opacity-100 flex items-center justify-center bg-neutral-300 dark:bg-neutral-800">
+              <span class="text-xs tracking-widest uppercase text-neutral-500">Emirgan Görsel 01</span>
+            </div>
+            <div class="slide-item absolute inset-0 transition-opacity duration-700 opacity-0 flex items-center justify-center bg-neutral-400 dark:bg-neutral-700">
+              <span class="text-xs tracking-widest uppercase text-neutral-200">Emirgan Görsel 02</span>
+            </div>
+            <div class="slide-item absolute inset-0 transition-opacity duration-700 opacity-0 flex items-center justify-center bg-neutral-500 dark:bg-neutral-600">
+              <span class="text-xs tracking-widest uppercase text-neutral-100">Emirgan Görsel 03</span>
+            </div>
+
+            <!-- Slider Dots (Noktalar) -->
+            <div class="absolute bottom-3 left-0 right-0 flex justify-center space-x-1.5 z-10">
+              <span class="dot w-1.5 h-1.5 rounded-full bg-white opacity-100 transition-all cursor-pointer"></span>
+              <span class="dot w-1.5 h-1.5 rounded-full bg-white opacity-40 transition-all cursor-pointer"></span>
+              <span class="dot w-1.5 h-1.5 rounded-full bg-white opacity-40 transition-all cursor-pointer"></span>
+            </div>
+          </div>
+          <h3 class="text-sm font-light tracking-wide group-hover:underline cursor-pointer" onclick="openProjectDetail('Emirgan Konut Projesi')">Emirgan Konut Projesi</h3>
+          <p class="text-[10px] text-neutral-500 font-mono mt-0.5">İç Mimari & Uygulama</p>
+        </div>
+
+        <!-- PROJE KARTI 2 (SLIDER) -->
+        <div class="group">
+          <div class="relative aspect-[4/5] bg-brandCard dark:bg-neutral-800 rounded-2xl overflow-hidden mb-3 border border-neutral-300/40 dark:border-neutral-800 shadow-sm" data-slider="p2">
+            
+            <!-- Görseller -->
+            <div class="slide-item absolute inset-0 transition-opacity duration-700 opacity-100 flex items-center justify-center bg-neutral-400 dark:bg-neutral-700">
+              <span class="text-xs tracking-widest uppercase text-neutral-200">Villa LATE 01</span>
+            </div>
+            <div class="slide-item absolute inset-0 transition-opacity duration-700 opacity-0 flex items-center justify-center bg-neutral-300 dark:bg-neutral-800">
+              <span class="text-xs tracking-widest uppercase text-neutral-500">Villa LATE 02</span>
+            </div>
+            <div class="slide-item absolute inset-0 transition-opacity duration-700 opacity-0 flex items-center justify-center bg-neutral-500 dark:bg-neutral-600">
+              <span class="text-xs tracking-widest uppercase text-neutral-100">Villa LATE 03</span>
+            </div>
+
+            <!-- Dots -->
+            <div class="absolute bottom-3 left-0 right-0 flex justify-center space-x-1.5 z-10">
+              <span class="dot w-1.5 h-1.5 rounded-full bg-white opacity-100 transition-all cursor-pointer"></span>
+              <span class="dot w-1.5 h-1.5 rounded-full bg-white opacity-40 transition-all cursor-pointer"></span>
+              <span class="dot w-1.5 h-1.5 rounded-full bg-white opacity-40 transition-all cursor-pointer"></span>
+            </div>
+          </div>
+          <h3 class="text-sm font-light tracking-wide group-hover:underline cursor-pointer" onclick="openProjectDetail('Villa LATE')">Villa LATE</h3>
+          <p class="text-[10px] text-neutral-500 font-mono mt-0.5">Mimari Tasarım</p>
+        </div>
+
+        <!-- PROJE KARTI 3 (SLIDER) -->
+        <div class="group">
+          <div class="relative aspect-[4/5] bg-brandCard dark:bg-neutral-800 rounded-2xl overflow-hidden mb-3 border border-neutral-300/40 dark:border-neutral-800 shadow-sm" data-slider="p3">
+            
+            <!-- Görseller -->
+            <div class="slide-item absolute inset-0 transition-opacity duration-700 opacity-100 flex items-center justify-center bg-neutral-500 dark:bg-neutral-600">
+              <span class="text-xs tracking-widest uppercase text-neutral-100">Ofis Tasarımı 01</span>
+            </div>
+            <div class="slide-item absolute inset-0 transition-opacity duration-700 opacity-0 flex items-center justify-center bg-neutral-400 dark:bg-neutral-700">
+              <span class="text-xs tracking-widest uppercase text-neutral-200">Ofis Tasarımı 02</span>
+            </div>
+            <div class="slide-item absolute inset-0 transition-opacity duration-700 opacity-0 flex items-center justify-center bg-neutral-300 dark:bg-neutral-800">
+              <span class="text-xs tracking-widest uppercase text-neutral-500">Ofis Tasarımı 03</span>
+            </div>
+
+            <!-- Dots -->
+            <div class="absolute bottom-3 left-0 right-0 flex justify-center space-x-1.5 z-10">
+              <span class="dot w-1.5 h-1.5 rounded-full bg-white opacity-100 transition-all cursor-pointer"></span>
+              <span class="dot w-1.5 h-1.5 rounded-full bg-white opacity-40 transition-all cursor-pointer"></span>
+              <span class="dot w-1.5 h-1.5 rounded-full bg-white opacity-40 transition-all cursor-pointer"></span>
+            </div>
+          </div>
+          <h3 class="text-sm font-light tracking-wide group-hover:underline cursor-pointer" onclick="openProjectDetail('Ofis & Mağaza Tasarımı')">Ofis & Mağaza Tasarımı</h3>
+          <p class="text-[10px] text-neutral-500 font-mono mt-0.5">Restorasyon</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 3. HİZMETLER SAYFASI -->
+    <section id="tab-hizmetler" class="tab-content hidden animate-pageZoom space-y-8 max-w-3xl mx-auto">
+      <div class="text-center mb-10">
+        <h1 class="text-3xl md:text-5xl font-light tracking-widest uppercase mb-3">HİZMETLER</h1>
+        <p class="text-xs text-neutral-500 tracking-wider">Tasarım sürecinden anahtar teslim uygulamaya</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-brandCard dark:bg-neutral-900 p-6 rounded-2xl border border-neutral-300/40 dark:border-neutral-800">
+          <h3 class="text-sm font-medium mb-2 uppercase tracking-wider">İç Mimari & Konsept Tasarım</h3>
+          <p class="text-xs text-neutral-600 dark:text-neutral-400 font-light leading-relaxed">Mekanlarınıza özel malzeme, mobilya ve aydınlatma kararları ile zamansız konseptler üretiyoruz.</p>
+        </div>
+        <div class="bg-brandCard dark:bg-neutral-900 p-6 rounded-2xl border border-neutral-300/40 dark:border-neutral-800">
+          <h3 class="text-sm font-medium mb-2 uppercase tracking-wider">Mimari Proje & Uygulama</h3>
+          <p class="text-xs text-neutral-600 dark:text-neutral-400 font-light leading-relaxed">Fikir aşamasından sahaya kadar tüm detay çözümlerini üst düzey işçilik anlayışıyla yürütüyoruz.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. EKİP SAYFASI -->
+    <section id="tab-ekip" class="tab-content hidden animate-pageZoom space-y-8 max-w-4xl mx-auto">
+      <div class="text-center mb-10">
+        <h1 class="text-3xl md:text-5xl font-light tracking-widest uppercase mb-3">EKİP</h1>
+        <p class="text-xs text-neutral-500 tracking-wider">Tasarım kültürümüzü oluşturan dinamik kadro</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-brandCard dark:bg-neutral-900 p-6 rounded-2xl border border-neutral-300/40 dark:border-neutral-800 text-center">
+          <div class="w-24 h-24 bg-neutral-300 dark:bg-neutral-800 rounded-full mx-auto mb-4 flex items-center justify-center text-xs text-neutral-500">Mimar</div>
+          <h3 class="text-sm font-medium uppercase tracking-wider">Kurucu / Mimar</h3>
+          <p class="text-xs text-neutral-500 mt-1">LATE Mimarlık</p>
+        </div>
+        <div class="bg-brandCard dark:bg-neutral-900 p-6 rounded-2xl border border-neutral-300/40 dark:border-neutral-800 text-center">
+          <div class="w-24 h-24 bg-neutral-300 dark:bg-neutral-800 rounded-full mx-auto mb-4 flex items-center justify-center text-xs text-neutral-500">İç Mimar</div>
+          <h3 class="text-sm font-medium uppercase tracking-wider">Tasarım & Görselleştirme</h3>
+          <p class="text-xs text-neutral-500 mt-1">LATE Mimarlık</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. HAKKIMIZDA SAYFASI -->
+    <section id="tab-hakkimizda" class="tab-content hidden animate-pageZoom space-y-8 max-w-3xl mx-auto text-center">
+      <h1 class="text-3xl md:text-5xl font-light tracking-widest uppercase mb-6">HAKKIMIZDA</h1>
+      <div class="bg-brandCard dark:bg-neutral-900 p-8 rounded-3xl border border-neutral-300/40 dark:border-neutral-800">
+        <p class="text-sm md:text-base font-light leading-relaxed text-neutral-700 dark:text-neutral-300 mb-6">
+          LATE Mimarlık olarak, her yapının ve mekanın kendine has bir hikayesi olduğuna inanıyoruz. Tasarımlarımızda sadelik, estetik ve ustalıklı işçiliği bir araya getirerek zamansız yaşam alanları kurguluyoruz.
+        </p>
+        <span class="text-xs tracking-[0.2em] font-light text-neutral-500 uppercase block">SADE VE ŞIK</span>
+      </div>
+    </section>
+
+    <!-- 6. İLETİŞİM SAYFASI -->
+    <section id="tab-iletisim" class="tab-content hidden animate-pageZoom space-y-8 max-w-3xl mx-auto">
+      <div class="text-center mb-10">
+        <h1 class="text-3xl md:text-5xl font-light tracking-widest uppercase mb-3">İLETİŞİM</h1>
+        <p class="text-xs text-neutral-500 tracking-wider">Projeleriniz ve sorularınız için bizimle iletişime geçin</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-brandCard dark:bg-neutral-900 p-6 rounded-2xl border border-neutral-300/40 dark:border-neutral-800 space-y-3 text-xs font-light">
+          <h3 class="font-medium text-sm uppercase tracking-wider mb-2">Ofis Bilgileri</h3>
+          <p><strong class="font-normal">Adres:</strong> Late mimarlık, 123 bilmemne sk, istanbul tr</p>
+          <p><strong class="font-normal">Tel:</strong> 123-456-789</p>
+          <p><strong class="font-normal">Email:</strong> late@gmail.com</p>
+          <p><strong class="font-normal">Instagram:</strong> <a href="https://instagram.com/latemimarlik" target="_blank" class="underline">@latemimarlik</a></p>
+        </div>
+
+        <form onsubmit="event.preventDefault(); alert('Mesajınız iletildi!');" class="bg-brandCard dark:bg-neutral-900 p-6 rounded-2xl border border-neutral-300/40 dark:border-neutral-800 space-y-3">
+          <input type="text" placeholder="Adınız Soyadınız" required class="w-full px-4 py-2 border border-neutral-300 dark:border-neutral-700 rounded-xl bg-brandBeige/50 dark:bg-neutral-800 text-xs focus:outline-none" />
+          <input type="email" placeholder="E-posta Adresiniz" required class="w-full px-4 py-2 border border-neutral-300 dark:border-neutral-700 rounded-xl bg-brandBeige/50 dark:bg-neutral-800 text-xs focus:outline-none" />
+          <textarea placeholder="Mesajınız" rows="3" required class="w-full px-4 py-2 border border-neutral-300 dark:border-neutral-700 rounded-xl bg-brandBeige/50 dark:bg-neutral-800 text-xs focus:outline-none"></textarea>
+          <button type="submit" class="w-full py-2.5 bg-brandText text-white dark:bg-white dark:text-brandDark rounded-xl text-xs font-light tracking-wider">Gönder</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-neutral-300/60 dark:border-neutral-800 px-8 py-8 text-xs font-light">
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+      <div>
+        <p class="font-medium text-xs">Late mimarlık</p>
+        <p class="text-[10px] text-neutral-500">123 bilmemne sk istanbul tr</p>
+      </div>
+      <div>
+        <p class="text-[10px] text-neutral-500">instagramdan takip edin: <a href="https://instagram.com/latemimarlik" target="_blank" class="underline text-brandText dark:text-neutral-200">@latemimarlik</a></p>
+      </div>
+      <div class="text-[10px] text-neutral-400 tracking-widest uppercase">
+        fatemimarlik ©012026. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS KONTROLLERİ -->
+  <script>
+    // Tab Değiştirme
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => {
+        el.classList.add('hidden');
+        el.classList.remove('animate-pageZoom');
+      });
+
+      const activeTab = document.getElementById(`tab-${tabId}`);
+      if (activeTab) {
+        activeTab.classList.remove('hidden');
+        void activeTab.offsetWidth;
+        activeTab.classList.add('animate-pageZoom');
+      }
+
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        if (btn.getAttribute('data-tab') === tabId) {
+          btn.classList.add('font-normal', 'border-b', 'border-brandText', 'dark:border-white');
+        } else {
+          btn.classList.remove('font-normal', 'border-b', 'border-brandText', 'dark:border-white');
+        }
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Proje Detay Gösterimi
+    function openProjectDetail(projectName) {
+      alert(`${projectName} detay sayfası yakında eklenecektir.`);
+    }
+
+    // Day / Night Tema Geçişi
+    const toggleBtn = document.getElementById('theme-toggle');
+    const toggleCircle = document.getElementById('toggle-circle');
+
+    toggleBtn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      const isDark = document.documentElement.classList.contains('dark');
+      if (isDark) {
+        toggleCircle.style.transform = 'translateX(20px)';
+        toggleCircle.innerText = '🌙';
+      } else {
+        toggleCircle.style.transform = 'translateX(0px)';
+        toggleCircle.innerText = '☀️️';
+      }
+    });
+
+    // İnteraktif Soru Adımları
+    function goToStep(step) {
+      document.getElementById('step-1').classList.add('hidden');
+      document.getElementById('step-2').classList.add('hidden');
+      document.getElementById('step-3').classList.add('hidden');
+      document.getElementById(`step-${step}`).classList.remove('hidden');
+    }
+
+    // 3 SANİYEDE BİR OTOMATİK KAYAN SLIDER MOTORU
+    function initAutoSliders() {
+      const sliders = document.querySelectorAll('[data-slider]');
+
+      sliders.forEach(slider => {
+        const slides = slider.querySelectorAll('.slide-item');
+        const dots = slider.querySelectorAll('.dot');
+        let currentIndex = 0;
+
+        function showSlide(index) {
+          slides.forEach((slide, idx) => {
+            if (idx === index) {
+              slide.classList.remove('opacity-0');
+              slide.classList.add('opacity-100');
+            } else {
+              slide.classList.remove('opacity-100');
+              slide.classList.add('opacity-0');
+            }
+          });
+
+          dots.forEach((dot, idx) => {
+            if (idx === index) {
+              dot.classList.remove('opacity-40');
+              dot.classList.add('opacity-100');
+            } else {
+              dot.classList.remove('opacity-100');
+              dot.classList.add('opacity-40');
+            }
+          });
+        }
+
+        // 3 saniyede bir otomatik geçiş
+        setInterval(() => {
+          currentIndex = (currentIndex + 1) % slides.length;
+          showSlide(currentIndex);
+        }, 3000);
+
+        // Noktalara tıklama fonksiyonu
+        dots.forEach((dot, idx) => {
+          dot.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentIndex = idx;
+            showSlide(currentIndex);
+          });
+        });
+      });
+    }
+
+    // Sayfa Yüklendiğinde Slider'ı Başlat
+    document.addEventListener('DOMContentLoaded', initAutoSliders);
+  </script>
+</body>
+</html>
